@@ -70,7 +70,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			<!-- Until https://github.com/spotify/dockerfile-maven/pull/89 is addressed -->
-			<!-- Copy Dockerfile and *.env files from specs/docker directory into project root -->
+			<!-- Copy Dockerfile from specs/docker directory into project root -->
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
 				<executions>
@@ -87,7 +87,6 @@
 									<directory>specs/docker</directory>
 									<includes>
 										<include>Dockerfile</include>
-										<include>*.env</include>
 									</includes>
 								</resource>
 							</resources>
@@ -103,7 +102,6 @@
 							<directory>${project.basedir}</directory>
 							<includes>
 								<include>Dockerfile</include>
-								<include>*.env</include>
 							</includes>
 							<followSymlinks>false</followSymlinks>
 						</fileset>

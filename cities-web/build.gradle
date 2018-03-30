@@ -43,6 +43,15 @@ docker {
     }
 }
 
+dockerRegistries {
+    // You'll want to replace the portion of the url below after the / with your own project_id
+    gcr {
+        url = 'us.gcr.io/fe-cphillipson'
+        username = 'oauth2accesstoken'
+        password = file('build/oauth2accesstoken').text.trim()
+    }
+}
+
 dependencies {
     compile project(':cities-domain')
     compile('org.springframework.boot:spring-boot-starter-actuator')

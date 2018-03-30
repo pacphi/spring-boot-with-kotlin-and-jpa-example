@@ -83,17 +83,29 @@ exit
 
 This project supports building, tagging, and deploying a Docker container image to a private registry via Maven plugin configuration
 
-> Replace occurrences of `{HOSTNAME}` with `us.gcr.io`, `{PROJECT_ID}`  with your Google Project Id, and `{VERSION}` with the tagged version of the artifact you want to push to/pull from the registry.
+> Replace occurrences of `{HOSTNAME}` with `us.gcr.io`, `{PROJECT_ID}` with your Google Project Id, and `{VERSION}` with the tagged version of the artifact you want to push/pull from the registry.
+
 
 ### with Maven
 
 ```
-mvn install -Ddocker.image.prefix={HOSTNAME}/{PROJECT_ID}
+docker login -u oauth2accesstoken -p "$(gcloud auth application-default print-access-token)" https://us.gcr.io
+./mvnw install -Ddocker.image.prefix={HOSTNAME}/{PROJECT_ID}
+```
+
+### with Gradle
+
+```
+gcloud auth application-default print-access-token > build/oauth2accesstoken
+cat build/oauth2accesstoken
+docker login -u oauth2accesstoken -p "<replace_me_with_oauth2accesstoken>" https://us.gcr.io
+./gradlew build pushDockerToGcr -PdockerImagePrefix={HOSTNAME}/{PROJECT_ID}
 ```
 
 > Note: if you do not specify `docker.image.prefix` as above it will default to `pivotalio`.   
 
 ### with Docker and Google Cloud SDK
+
 ```
 docker build -t cities-web .
 docker tag cities-web {HOSTNAME}/{PROJECT_ID}/cities-web:{VERSION}
@@ -188,6 +200,7 @@ or
 ```
 
 > Press `Ctrl+C` to exit.
+
 
 ### with Docker Compose
 
