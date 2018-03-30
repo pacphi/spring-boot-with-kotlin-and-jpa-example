@@ -5,6 +5,10 @@ bootJar {
     classifier = 'exec'
 }
 
+bootRun {
+    systemProperties = System.properties
+}
+
 cfConfig {
     //CF Details
     ccHost = "api.run.pivotal.io"
