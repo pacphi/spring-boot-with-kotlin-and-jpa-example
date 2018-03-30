@@ -1,0 +1,18 @@
+version: '3.3'
+services:
+  db:
+    image: postgres:10.3
+    restart: always
+    env_file:
+      - db.env
+    ports:
+      - "5432:5432"
+  webapp:
+    #image: us.gcr.io/{project_id}/cities-web:latest
+    image: pivotalio/cities-web:latest
+    links:
+      - db
+    env_file:
+      - webapp.env
+    ports:
+      - "8080:8080"

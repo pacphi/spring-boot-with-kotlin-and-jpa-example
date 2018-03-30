@@ -1,0 +1,75 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: none
+  flyway:
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    baseline-version: 1.0
+  jackson:
+    serialization-inclusion: non-empty
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+logging:
+  level:
+    org.flyway: DEBUG
+    org.hibernate: DEBUG
+    org.springframework: INFO
+    com.zaxxer.hikari: DEBUG
+    io.pivotal: DEBUG
+    
+---
+
+spring:
+  profiles: postgres 
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/geo_data
+    username: postgres
+    password: postgres
+  jpa:
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+
+---
+
+spring:
+  profiles: seeded
+  flyway:
+    locations: classpath:db/migration, classpath:db/sql/test
+  
+---
+
+spring:
+  profiles: h2
+  h2:
+    console:
+      enabled: true 
+
+---
+
+spring:
+  profiles: cloud
+  jpa:
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+
+---
+
+spring:
+  profiles: k8s
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST}:5432/${POSTGRES_DB}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}

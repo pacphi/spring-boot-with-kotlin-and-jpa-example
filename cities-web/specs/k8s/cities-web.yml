@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cities-web-config
+  namespace: default
+data:
+  spring_profiles_active: k8s,seeded
+  java_opts: -XX:+UseG1GC -Xmx1G
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: cities-web
+  namespace: default
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: cities-web
+      labels:
+        app: cities-web
+    spec:
+      containers:
+      - name: cities-web
+        env:
+          - name: POSTGRES_USER
+            valueFrom:
+              configMapKeyRef:
+                name: postgres-config
+                key: postgres_user
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: postgres-config
+                key: postgres_password
+          - name: POSTGRES_DB
+            valueFrom:
+              configMapKeyRef:
+                name: postgres-config
+                key: postgres_db
+          - name: POSTGRES_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: hostname-config
+                key: postgres_host
+          - name: SPRING_PROFILES_ACTIVE
+            valueFrom:
+              configMapKeyRef:
+                name: cities-web-config
+                key: spring_profiles_active
+          - name: JAVA_OPTS
+            valueFrom:
+              configMapKeyRef:
+                name: cities-web-config
+                key: java_opts
+        #image: us.gcr.io/{project_id}/cities-web:latest
+        image: us.gcr.io/fe-cphillipson/cities-web:latest
+        imagePullPolicy: IfNotPresent
