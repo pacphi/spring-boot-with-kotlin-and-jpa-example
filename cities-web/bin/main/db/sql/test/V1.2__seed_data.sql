@@ -1,1 +1,0 @@
-INSERT INTO city (id, name, description, latitude, longitude, updated_at, created_at) VALUES ('SEA', 'Seattle', '', 47.6062, -122.334198, '2018-03-25 11:18:35', '2018-03-25 11:18:35');
