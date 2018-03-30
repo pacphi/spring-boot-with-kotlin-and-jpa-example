@@ -93,6 +93,8 @@ docker login -u oauth2accesstoken -p "$(gcloud auth application-default print-ac
 ./mvnw install -Ddocker.image.prefix={HOSTNAME}/{PROJECT_ID}
 ```
 
+> Note: if you do not specify `docker.image.prefix` as above it will default to `pivotalio`.
+
 ### with Gradle
 
 ```
@@ -102,7 +104,8 @@ docker login -u oauth2accesstoken -p "<replace_me_with_oauth2accesstoken>" https
 ./gradlew build pushDockerToGcr -PdockerImagePrefix={HOSTNAME}/{PROJECT_ID}
 ```
 
-> Note: if you do not specify `docker.image.prefix` as above it will default to `pivotalio`.   
+> Note: if you do not specify `dockerImagePrefix` as above it will default to `pivotalio`.
+   
 
 ### with Docker and Google Cloud SDK
 
