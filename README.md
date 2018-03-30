@@ -50,6 +50,81 @@ git clone https://github.com/pacphi/spring-boot-with-kotlin-and-jpa-example.git
 An artifact is produced with a `version` which is managed in both the `pom.xml` and `gradle.properties` files in the root of this project.  Where you see `x.x.x` below, replace with the a real version (e.g., `1.0.0-SNAPSHOT`).
 
 
+## How to set up a Kubernetes cluster
+
+### on minikube
+
+Setup
+
+```
+minikube start
+```
+
+Teardown
+
+```
+minikube stop
+minikube delete
+```
+
+### on GKE using kops
+
+Distilled from [Getting Started with kops on GCE](https://github.com/kubernetes/kops/blob/master/docs/tutorial/gce.md)
+
+Create environment variables
+
+```
+export BUCKET_SUFFIX=<replace_with_bucket_suffix>
+export PROJECT=`gcloud config get-value project`
+export KOPS_FEATURE_FLAGS=AlphaAllowGCE
+export ZONE=<replace_with_zone>
+export KOPS_STATE_STORE=gs://kubernetes-clusters-${BUCKET_SUFFIX}/
+```
+
+Create storage bucket
+
+```
+gsutil mb gs://kubernetes-clusters-${BUCKET_SUFFIX}
+```
+
+Create cluster configuration
+
+```
+kops create cluster simple.k8s.local --zones ${ZONE} --state gs://kubernetes-clusters-${BUCKET_SUFFIX}/ --project=${PROJECT} --ssh-public-key=<repalce_with_ssh_public_key>
+```
+
+Check configuration
+
+```
+kops get cluster --state ${KOPS_STATE_STORE}
+kops get cluster --state ${KOPS_STATE_STORE} simple.k8s.local -oyaml
+kops get instancegroup --state ${KOPS_STATE_STORE} --name simple.k8s.local
+```
+
+Create cluster
+
+```
+kops update cluster simple.k8s.local --yes
+kops validate cluster
+```
+
+Use 
+
+```
+kubectl get nodes --show-labels
+```
+
+Teardown
+
+```
+kops delete cluster simple.k8s.local --yes
+```
+
+### on PKS
+
+// TODO
+
+
 ## How to configure a private registry
 
 ### with [Google Container Registry](https://cloud.google.com/container-registry/?hl=en_US)
