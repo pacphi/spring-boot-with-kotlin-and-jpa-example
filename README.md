@@ -8,7 +8,7 @@ Also serves as a proving ground to explore and compare the relative levels of ef
 
 * Docker
 * Pivotal Application Service
-* Kubernetes ( minikube | kops | GKE | PKS )
+* Kubernetes ( minikube | GKE | PKS )
 
 ## Prerequisites
 
@@ -18,7 +18,7 @@ Also serves as a proving ground to explore and compare the relative levels of ef
 * An instance of [Postgres](https://www.postgresql.org) 10.3 or better
 * Docker ([Community](https://store.docker.com/search?type=edition&offering=community) or [Enterprise](https://store.docker.com/search?type=edition&offering=enterprise) Editions for Windows | Mac | Linux) 18.03.0 or better
 * Google Cloud [SDK](https://cloud.google.com/sdk/) 195.0.0 or better
-* Kubernetes if you want to deploy the application to minikube, kops, GKE, or PKS
+* Kubernetes if you want to deploy the application to minikube, GKE, or PKS
 	* [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) 1.10.0 or better
 	* [minikube](https://github.com/kubernetes/minikube/releases) 0.25.2 or better 
 	* [kops](https://github.com/kubernetes/kops) 1.9.0-alpha.3 or better
@@ -58,6 +58,7 @@ Setup
 
 ```
 minikube start
+minikube dashboard
 ```
 
 Teardown
@@ -69,7 +70,7 @@ minikube delete
 
 ### on GKE using kops
 
-Distilled from [Getting Started with kops on GCE](https://github.com/kubernetes/kops/blob/master/docs/tutorial/gce.md)
+> Distilled from [Getting Started with kops on GCE](https://github.com/kubernetes/kops/blob/master/docs/tutorial/gce.md)
 
 Create environment variables
 
