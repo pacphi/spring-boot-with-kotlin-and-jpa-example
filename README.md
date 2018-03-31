@@ -8,7 +8,7 @@ Also serves as a proving ground to explore and compare the relative levels of ef
 
 * Docker
 * Pivotal Application Service
-* Kubernetes ( minikube | GKE | PKS )
+* Kubernetes ( minikube | GKE | Pivotal Container Service (PKS) )
 
 ## Prerequisites
 
@@ -52,7 +52,7 @@ An artifact is produced with a `version` which is managed in both the `pom.xml` 
 
 ## How to set up a Kubernetes cluster
 
-### on minikube
+### on Minikube
 
 Setup
 
@@ -91,15 +91,15 @@ gsutil mb gs://kubernetes-clusters-${BUCKET_SUFFIX}
 Create cluster configuration
 
 ```
-kops create cluster simple.k8s.local --zones ${ZONE} --state gs://kubernetes-clusters-${BUCKET_SUFFIX}/ --project=${PROJECT} --ssh-public-key=<repalce_with_ssh_public_key>
+kops create cluster simple.k8s.local --zones ${ZONE} --project=${PROJECT} --ssh-public-key=<repalce_with_ssh_public_key>
 ```
 
 Check configuration
 
 ```
-kops get cluster --state ${KOPS_STATE_STORE}
-kops get cluster --state ${KOPS_STATE_STORE} simple.k8s.local -oyaml
-kops get instancegroup --state ${KOPS_STATE_STORE} --name simple.k8s.local
+kops get cluster
+kops get cluster simple.k8s.local -oyaml
+kops get instancegroup --name simple.k8s.local
 ```
 
 Create cluster
@@ -123,7 +123,7 @@ kops delete cluster simple.k8s.local --yes
 
 ### on PKS
 
-// TODO
+> Assuming you've installed PKS on [vSphere](https://docs.pivotal.io/runtimes/pks/1-0/vsphere.html) or [GCP](https://docs.pivotal.io/runtimes/pks/1-0/gcp.html), consult [Using PKS](https://docs.pivotal.io/runtimes/pks/1-0/using.html).  Also see [PKS CLI](https://docs.pivotal.io/runtimes/pks/1-0/cli/index.html).
 
 
 ## How to configure a private registry
@@ -315,7 +315,7 @@ Create an external load balancer for your app
 kubectl expose deployment cities-web --type=LoadBalancer --port=8080
 ```
 
-#### on minikube
+#### on Minikube
 
 Get the external IP address of service
 
