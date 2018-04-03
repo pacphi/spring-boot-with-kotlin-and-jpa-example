@@ -91,7 +91,7 @@ gsutil mb gs://kubernetes-clusters-${BUCKET_SUFFIX}
 Create cluster configuration
 
 ```
-kops create cluster simple.k8s.local --zones ${ZONE} --project=${PROJECT} --ssh-public-key=<repalce_with_ssh_public_key>
+kops create cluster simple.k8s.local --zones ${ZONE} --project=${PROJECT} --ssh-public-key=<replace_with_ssh_public_key>
 ```
 
 Check configuration
@@ -161,6 +161,9 @@ This project supports building, tagging, and deploying a Docker container image 
 
 > Replace occurrences of `{HOSTNAME}` with `us.gcr.io`, `{PROJECT_ID}` with your Google Project Id, and `{VERSION}` with the tagged version of the artifact you want to push/pull from the registry.
 
+```
+cd cities-web
+```
 
 ### with Maven
 
@@ -176,7 +179,7 @@ docker login -u oauth2accesstoken -p "$(gcloud auth application-default print-ac
 ```
 gcloud auth application-default print-access-token > build/oauth2accesstoken
 cat build/oauth2accesstoken
-docker login -u oauth2accesstoken -p "<replace_me_with_oauth2accesstoken>" https://us.gcr.io
+docker login -u oauth2accesstoken -p "<replace_me_with_token>" https://us.gcr.io
 ./gradlew build pushDockerToGcr -PdockerImagePrefix={HOSTNAME}/{PROJECT_ID}
 ```
 
@@ -200,7 +203,6 @@ gcloud docker -- push {HOSTNAME}/{PROJECT_ID}/cities-web:{VERSION}
 Start
 
 ```
-cd specs/docker
 docker run -it --rm -p 5432:5432 -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=geo_data -d postgres:10.3
 ```
 Stop and cleanup
@@ -215,6 +217,10 @@ docker rm {container_id}
 
 
 ### with Kubernetes
+
+```
+cd cities-web
+```
 
 Deploy postgres with a persistent volume claim
 
@@ -254,10 +260,14 @@ cf create-service elephantsql panda my-pgdb
 
 ## How to Run 
 
+```
+cd cities-web
+```
+
 ### with Maven
 
 ```
-java -Dspring.profiles.active=postgres,seeded -jar cities-web/target/cities-web-x.x.x.jar
+java -Dspring.profiles.active=postgres,seeded -jar target/cities-web-x.x.x.jar
 ```
 
 or 
@@ -269,7 +279,7 @@ or
 ### with Gradle
 
 ```
-java -Dspring.profiles.active=postgres,seeded -jar cities-web/build/libs/cities-web-x.x.x-exec.jar
+java -Dspring.profiles.active=postgres,seeded -jar build/libs/cities-web-x.x.x-exec.jar
 ```
 
 or
