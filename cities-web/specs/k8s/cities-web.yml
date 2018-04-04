@@ -54,5 +54,6 @@ spec:
                 name: cities-web-config
                 key: java_opts
         #image: us.gcr.io/{project_id}/cities-web:latest
+        #image: {prefix}.azurecr.io/{subscription_id}/cities-web:latest
         image: us.gcr.io/fe-cphillipson/cities-web:latest
         imagePullPolicy: IfNotPresent
