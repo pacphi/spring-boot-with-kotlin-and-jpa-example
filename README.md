@@ -255,7 +255,7 @@ az acr create --resource-group $AZ_GROUP --name $AZ_REGISTRY --sku Basic
 
 > Feel free to modify the `AZ_GROUP` and `AZ_REGISTRY` environment variable values above.
 
-## Preparing Minikube to work with privte registry
+## Preparing Minikube to work with a private registry
 
 You must [authorize](https://github.com/kubernetes/minikube/issues/321#issuecomment-265222572) minikube to work with your private registry.  
 
