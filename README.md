@@ -127,7 +127,7 @@ kops delete cluster simple.k8s.local --yes
 
 ### on Azure using juju
 
-> Distilled from [Using the Micorsoft Azure public cloud](https://jujucharms.com/docs/devel/help-azure) and [Setting up Kubernetes with Juju](https://kubernetes.io/docs/getting-started-guides/ubuntu/installation/)
+> Distilled from [Using the Microsoft Azure public cloud](https://jujucharms.com/docs/devel/help-azure) and [Setting up Kubernetes with Juju](https://kubernetes.io/docs/getting-started-guides/ubuntu/installation/)
 
 Initialize juju
 
@@ -150,7 +150,7 @@ export APP_PASSWORD=b00tMe
 az ad sp create-for-rbac --name "my.k8s.io" --password $APP_PASSWORD --role Owner
 ```
 
-> Notes: (1) We're setting a subscription id variable to the first id returned from the acccount list. If you have more than one account, be sure choose one with elevated privileges. (2) The `APP_PASSWORD` value should be replaced. (3) The `--name` option from the create service principal command above is arbitrary. (4) Capture `appId` and `tenantId` from the output. Export two additional environment variables based on these values.
+> Notes: (1) We're setting a subscription id variable to the first id returned from the acccount list. If you have more than one account; be sure choose one with elevated privileges. (2) The `APP_PASSWORD` value should be replaced. (3) The `--name` option from the create service principal command above is arbitrary. (4) Capture `appId` and `tenantId` from the output. Export two additional environment variables based on these values.
 
 ```
 export APP_ID=...
@@ -328,7 +328,7 @@ gcloud docker -- push {HOSTNAME}/{PROJECT_ID}/cities-web:{VERSION}
 
 ```
 az acr login --name $AZ_REGISTRY
-export AZ_REGISTRY_HOSTNAME=`az acr list --resource-group myResourceGroup --query "[].{acrLoginServer:loginServer}" --output json | jq '.[0].acrLoginServer'`
+export AZ_REGISTRY_HOSTNAME=`az acr list --resource-group $AZ_GROUP --query "[].{acrLoginServer:loginServer}" --output json | jq '.[0].acrLoginServer'`
 docker tag pivotalio/cities-web $AZ_REGISTRY_HOSTNAME/fe-cphillipson/cities-web:latest
 docker push $AZ_REGISTRY_HOSTNAME/fe-cphillipson/cities-web:latest
 ```
@@ -431,7 +431,7 @@ or
 
 ### with Docker Compose
 
-This setup uses ephemeral storage.  When the `db` contaner stopped all data will be lost!
+This setup uses ephemeral storage.  When the `db` container is stopped all data will be lost!
 
 > Optional: edit the `docker-compose.yml` file to swap the `webapp` image.
 
