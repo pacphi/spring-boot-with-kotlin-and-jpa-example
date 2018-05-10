@@ -5,6 +5,8 @@ bootJar {
     classifier = 'exec'
 }
 
+jar.enabled = false
+
 bootRun {
     systemProperties = System.properties
 }
@@ -37,7 +39,7 @@ docker {
     buildArgs = ['JAR_FILE': "${bootJar.archiveName}"]
     tags 'latest', project.version
     files bootJar.archivePath
-    dockerFile "${buildDir}/specs/docker/Dockerfile"
+    dockerFile "${projectDir}/specs/docker/Dockerfile"
     run {
         ports '8080:8080'
         env 'JAVA_OPTS=-Xmx1G -XX:+UseG1GC'
@@ -65,6 +67,7 @@ dependencies {
     compile('org.springframework.data:spring-data-rest-hal-browser')
     compile('com.fasterxml.jackson.module:jackson-module-kotlin')
     compile('com.zaxxer:HikariCP')
+    compile('io.micrometer:micrometer-registry-prometheus:1.0.4')
     runtime('com.h2database:h2')
     runtime('org.postgresql:postgresql:42.2.2')
 }

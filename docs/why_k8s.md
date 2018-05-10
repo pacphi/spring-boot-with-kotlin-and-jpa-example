@@ -74,6 +74,9 @@
 
 ## Source material
 
+* [How Kubernetes became the solution for migrating legacy applications](https://opensource.com/article/18/2/how-kubernetes-became-solution-migrating-legacy-applications)
+* [Kubernetes vs. Docker: Comparing Containerization Platforms](http://technologyadvice.com/blog/information-technology/kubernetes-vs-docker/)
+* [Tips for building a Kuberenetes Proof of Concept](https://opensource.com/article/18/3/building-kubernetes-proof-concept)
 * [Kubernetes the Hard Way](https://github.com/kelseyhightower/kubernetes-the-hard-way/), Kelsey Hightower
 * [PKS](https://docs.vmware.com/en/VMware-Pivotal-Container-Service/1.0/vmware-pks-10/GUID-PKS10-index.html), VMWare Docs
 * Virtually Ghetto, William Lam
