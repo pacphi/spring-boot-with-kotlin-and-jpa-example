@@ -1,9 +1,11 @@
 buildscript {
     ext {
-        cfAppVersion = '2.2.0-rc.2'
+        gitPropertiesPluginVersion = '1.5.1'
+        cfAppVersion = '2.2.0'
         dockerPluginVersion = '1.5.4'
-        kotlinVersion = '1.2.30'
-        springBootVersion = '2.0.0.RELEASE'
+        kotlinVersion = '1.2.51'
+        springBootVersion = '2.0.3.RELEASE'
+        springDependencyManagementPluginVersion = '1.0.6.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -16,10 +18,10 @@ buildscript {
         classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
         classpath("org.jetbrains.kotlin:kotlin-noarg:${kotlinVersion}")
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath("io.spring.gradle:dependency-management-plugin:1.0.4.RELEASE")
+        classpath("io.spring.gradle:dependency-management-plugin:${springDependencyManagementPluginVersion}")
         classpath("com.github.pivotalservices:ya-cf-app-gradle-plugin:${cfAppVersion}")
         classpath("gradle.plugin.org.sgornostal:gradle-docker-plugin:${dockerPluginVersion}")
-        classpath("gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:1.4.17")
+        classpath("gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:${gitPropertiesPluginVersion}")
     }
 }
 
@@ -63,7 +65,7 @@ subprojects {
     apply plugin: 'io.spring.dependency-management'
     apply plugin: 'org.sgornostal.docker'
 
-    jacoco { toolVersion = "0.8.0" }
+    jacoco { toolVersion = "0.8.1" }
     
     jacocoTestReport {
         reports {

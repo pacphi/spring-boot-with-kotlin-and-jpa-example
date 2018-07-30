@@ -14,6 +14,7 @@ Also serves as a proving ground to explore and compare the relative levels of ef
 
 * [jq](https://stedolan.github.io/jq/) 1.5 or better
 * Java [JDK](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) 1.8u162 or better
+	* Note: as of 2018-07-28 this project does not yet work with Java 10 or 11.
 * [CF CLI](https://github.com/cloudfoundry/cli#downloads) 6.35.2 or better if you want to push the application to a Cloud Foundry (CF) instance
 * [Postman](https://www.getpostman.com) 6.0.10 or better to simplify interaction with API endpoints
 * An instance of [Postgres](https://www.postgresql.org) 10.3 or better

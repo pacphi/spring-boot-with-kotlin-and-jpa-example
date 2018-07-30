@@ -14,7 +14,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.0.0.RELEASE</version>
+		<version>2.0.3.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
@@ -23,12 +23,12 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<kotlin.version>1.2.30</kotlin.version>
-		<mockito.version>2.16.0</mockito.version>
+		<kotlin.version>1.2.51</kotlin.version>
+		<mockito.version>2.20.1</mockito.version>
 		<assertj.version>3.9.1</assertj.version>
-		<mockito-kotlin.version>1.5.0</mockito-kotlin.version>
-		<jackson.version>2.9.3</jackson.version>
-		<flyway.version>5.0.7</flyway.version>
+		<mockito-kotlin.version>1.6.0</mockito-kotlin.version>
+		<jackson.version>2.9.6</jackson.version>
+		<flyway.version>5.1.4</flyway.version>
 	</properties>
 
 	<modules>
@@ -82,6 +82,28 @@
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
+			<scope>test</scope>
+			<exclusions>
+        		<exclusion>
+					<groupId>net.bytebuddy</groupId>
+          			<artifactId>byte-buddy</artifactId>
+        		</exclusion>
+				<exclusion>
+          			<groupId>net.bytebuddy</groupId>
+          			<artifactId>byte-buddy-agent</artifactId>
+        		</exclusion>
+      	</exclusions>
+		</dependency>
+		<dependency>
+    		<groupId>net.bytebuddy</groupId>
+    		<artifactId>byte-buddy</artifactId>
+    		<version>1.8.15</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+    		<groupId>net.bytebuddy</groupId>
+    		<artifactId>byte-buddy-agent</artifactId>
+    		<version>1.8.15</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
