@@ -67,9 +67,9 @@ dependencies {
     compile('org.springframework.data:spring-data-rest-hal-browser')
     compile('com.fasterxml.jackson.module:jackson-module-kotlin')
     compile('com.zaxxer:HikariCP')
-    compile('io.micrometer:micrometer-registry-prometheus:1.0.4')
+    compile('io.micrometer:micrometer-registry-prometheus:1.0.6')
     runtime('com.h2database:h2')
-    runtime('org.postgresql:postgresql:42.2.2')
+    runtime('org.postgresql:postgresql:42.2.4')
 }
 
 build.dependsOn buildDocker

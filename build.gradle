@@ -1,11 +1,11 @@
 buildscript {
     ext {
-        gitPropertiesPluginVersion = '1.4.21'
-        cfAppVersion = '2.2.0-rc.2'
+        gitPropertiesPluginVersion = '1.5.1'
+        cfAppVersion = '2.2.0'
         dockerPluginVersion = '1.5.4'
-        kotlinVersion = '1.2.41'
-        springBootVersion = '2.0.1.RELEASE'
-        springDependencyManagementPluginVersion = '1.0.5.RELEASE'
+        kotlinVersion = '1.2.51'
+        springBootVersion = '2.0.3.RELEASE'
+        springDependencyManagementPluginVersion = '1.0.6.RELEASE'
     }
     repositories {
         mavenCentral()
