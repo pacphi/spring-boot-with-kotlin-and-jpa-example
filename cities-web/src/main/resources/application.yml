@@ -59,10 +59,12 @@ spring:
 ---
 
 spring:
-  profiles: h2
-  h2:
-    console:
-      enabled: true 
+  profiles: hsql
+  datasource: 
+    driver-class-name: org.hsqldb.jdbc.JDBCDriver
+    url: jdbc:hsqldb:mem:geo_data
+    username: sa
+    password: 
 
 ---
 

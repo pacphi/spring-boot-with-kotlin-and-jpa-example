@@ -43,12 +43,17 @@ git clone https://github.com/pacphi/spring-boot-with-kotlin-and-jpa-example.git
 ### with Maven
 
 ```
+cd spring-boot-with-kotlin-and-jpa-example
 ./mvnw package
 ```
 
 ### with Gradle
 
 ```
+cd spring-boot-with-kotlin-and-jpa-example
+rm -Rf cities-web/build
+mkdir -p cities-web/build
+touch cities-web/build/oauth2accesstoken
 ./gradlew build
 ```
 
@@ -399,32 +404,30 @@ cf create-service elephantsql panda my-pgdb
 
 ## How to Run 
 
-```
-cd cities-web
-```
-
 ### with Maven
 
 ```
+cd cities-web
 java -Dspring.profiles.active=postgres,seeded -jar target/cities-web-x.x.x.jar
 ```
 
 or 
 
 ```
-./mvnw spring-boot:run -Dspring.profiles.active=postgres,seeded
+./mvnw -p cities-web spring-boot:run -Dspring.profiles.active=postgres,seeded
 ```
 
 ### with Gradle
 
 ```
+cd cities-web
 java -Dspring.profiles.active=postgres,seeded -jar build/libs/cities-web-x.x.x-exec.jar
 ```
 
 or
 
 ```
-./gradlew bootRun -Dspring.profiles.active=postgres,seeded
+./gradlew cities-web:bootRun -Dspring.profiles.active=postgres,seeded
 ```
 
 > Press `Ctrl+C` to exit.
@@ -436,7 +439,7 @@ This setup uses ephemeral storage.  When the `db` container is stopped all data 
 
 > Optional: edit the `docker-compose.yml` file to swap the `webapp` image.
 
-to startup
+to startup (from root directory)
 
 ```
 cd specs/docker
