@@ -28,7 +28,7 @@
 		<assertj.version>3.9.1</assertj.version>
 		<mockito-kotlin.version>1.6.0</mockito-kotlin.version>
 		<jackson.version>2.9.6</jackson.version>
-		<flyway.version>6.2.4</flyway.version>
+		<flyway.version>6.3.0</flyway.version>
 	</properties>
 
 	<modules>
