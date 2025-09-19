@@ -83,7 +83,7 @@
 	* [Getting started with VMware Pivotal Container Service (PKS)](https://www.virtuallyghetto.com/2018/04/getting-started-with-vmware-pivotal-container-service-pks-part-6-kubernetes-go.html)
 * The Blas from Pas, Pas Apicella
 	* [Install Pivotal Container Service (PKS) on GCP and getting started](http://theblasfrompas.blogspot.com/2018/04/install-pivotal-container-service-pks.html)
-	* [Wiring kubectl / Setup external LB on GCP into Pivotal Container Service (PKS) clusters to get started](http://theblasfrompas.blogspot.com/2018/04/wiring-kubectl-setup-external-lb-on-gcp.html) 
+	* [Wiring kubectl / Setup external LB on GCP into Pivotal Container Service (PKS) clusters to get started](http://theblasfrompas.blogspot.com/2018/04/wiring-kubectl-setup-external-lb-on-gcp.html)
 	* [Deploying my first Pivotal Container Service (PKS) workload to my PKS cluster](http://theblasfrompas.blogspot.com/2018/04/deploying-my-first-pivotal-container.html)
 * [Picking the Right Solution](https://kubernetes.io/docs/setup/pick-right-solution/#on-premises-turnkey-cloud-solutions), kubernetes.io
 * [Evaluating PKS for Kubernetes Clusters](https://www.altoros.com/blog/evaluating-the-new-pivotal-container-service-for-kubernetes-clusters/), altoros.com

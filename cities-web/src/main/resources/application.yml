@@ -32,11 +32,13 @@ logging:
     org.springframework: INFO
     com.zaxxer.hikari: DEBUG
     io.pivotal: DEBUG
-    
+
 ---
 
 spring:
-  profiles: postgres 
+  config:
+    activate:
+      on-profile: postgres
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/geo_data
@@ -52,24 +54,30 @@ spring:
 ---
 
 spring:
-  profiles: seeded
+  config:
+    activate:
+      on-profile: seeded
   flyway:
     locations: classpath:db/migration, classpath:db/sql/test
-  
+
 ---
 
 spring:
-  profiles: hsql
-  datasource: 
+  config:
+    activate:
+      on-profile: hsql
+  datasource:
     driver-class-name: org.hsqldb.jdbc.JDBCDriver
     url: jdbc:hsqldb:mem:geo_data
     username: sa
-    password: 
+    password:
 
 ---
 
 spring:
-  profiles: cloud
+  config:
+    activate:
+      on-profile: cloud
   jpa:
     properties:
       hibernate:
@@ -80,7 +88,9 @@ spring:
 ---
 
 spring:
-  profiles: k8s
+  config:
+    activate:
+      on-profile: k8s
   datasource:
     url: jdbc:postgresql://${POSTGRES_HOST}:5432/${POSTGRES_DB}
     username: ${POSTGRES_USER}

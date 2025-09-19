@@ -1,8 +1,8 @@
 package io.pivotal.cities.domain.city.api.dto
 
 import io.pivotal.cities.domain.location.api.CoordinateDto
-import javax.validation.constraints.NotEmpty
-import javax.validation.Valid
+import jakarta.validation.constraints.NotEmpty
+import jakarta.validation.Valid
 
 data class CreateCityDto(
         @NotEmpty var id: String,

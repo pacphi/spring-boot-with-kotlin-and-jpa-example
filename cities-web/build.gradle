@@ -33,28 +33,21 @@ cfConfig {
     environment = ["JAVA_OPTS": "-Djava.security.egd=file:/dev/./urandom", "SPRING_PROFILES_ACTIVE": "cloud"]
 }
 
-docker {
-    dependsOn bootJar
-    imageName = "${dockerImagePrefix}/${bootJar.baseName}"
-    buildArgs = ['JAR_FILE': "${bootJar.archiveName}"]
-    tags 'latest', project.version
-    files bootJar.archivePath
-    dockerFile "${projectDir}/specs/docker/Dockerfile"
-    run {
-        ports '8080:8080'
-        env 'JAVA_OPTS=-Xmx1G -XX:+UseG1GC'
-    }
-    clean { 
-        force = true                                    
-    }
-}
-
-dockerRegistries {
-    // You'll want to replace the portion of the url below after the / with your own project_id
-    gcr {
-        url = 'us.gcr.io/fe-cphillipson'
-        username = 'oauth2accesstoken'
-        password = file('build/oauth2accesstoken').text.trim()
+tasks.named("bootBuildImage") {
+    imageName = "${dockerImagePrefix}/${bootJar.baseName}:${project.version}"
+    tags = ["${dockerImagePrefix}/${bootJar.baseName}:latest"]
+    environment = [
+        "BP_JVM_VERSION": "21"
+    ]
+    if (project.hasProperty("publishImage") && publishImage.toBoolean()) {
+        publish = true
+        docker {
+            publishRegistry {
+                url = "us.gcr.io"
+                username = "oauth2accesstoken"
+                password = file('build/oauth2accesstoken').text.trim()
+            }
+        }
     }
 }
 
@@ -64,12 +57,11 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-starter-hateoas')
-    compile('org.springframework.data:spring-data-rest-hal-browser')
+    compile('org.springframework.data:spring-data-rest-hal-explorer')
     compile('com.fasterxml.jackson.module:jackson-module-kotlin')
     compile('com.zaxxer:HikariCP')
-    compile('io.micrometer:micrometer-registry-prometheus:1.0.6')
-    runtime('org.hsqldb:hsqldb:2.4.1')
-    runtime('org.postgresql:postgresql:42.2.4')
+    compile('io.micrometer:micrometer-registry-prometheus:1.15.4')
+    runtime('org.hsqldb:hsqldb:2.7.4')
+    runtime('org.postgresql:postgresql:42.7.7')
 }
 
-build.dependsOn buildDocker

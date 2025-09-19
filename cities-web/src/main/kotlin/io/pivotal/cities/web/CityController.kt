@@ -6,9 +6,9 @@ import io.pivotal.cities.domain.city.api.dto.UpdateCityDto
 import io.pivotal.cities.web.CITIES_PATH
 import io.pivotal.cities.web.resource.CityResource
 import org.slf4j.LoggerFactory
-import org.springframework.hateoas.Resources
-import org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo
-import org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn
+import org.springframework.hateoas.CollectionModel
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -26,13 +26,13 @@ import org.springframework.web.util.UriComponentsBuilder
 class CityController(val cityService: CityService) {
 
 	private val log = LoggerFactory.getLogger(CityController::class.java)
-	
+
     @GetMapping
-    fun retrieveCities(): HttpEntity<Resources<CityResource>> {
+    fun retrieveCities(): HttpEntity<CollectionModel<CityResource>> {
         log.debug("Retrieving cities")
 
         val result = cityService.retrieveCities()
-        return ResponseEntity.ok(Resources(result.map { CityResource.fromDto(it) }))
+        return ResponseEntity.ok(CollectionModel.of(result.map { CityResource.fromDto(it) }))
     }
 
 
@@ -78,7 +78,7 @@ class CityController(val cityService: CityService) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build()
         }
     }
-	
+
 	@DeleteMapping("{id}")
     fun deleteCity(@PathVariable("id") cityId: String): HttpEntity<CityResource> {
         log.debug("Request to update city: {}", cityId)

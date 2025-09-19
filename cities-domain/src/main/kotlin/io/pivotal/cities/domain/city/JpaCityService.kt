@@ -8,14 +8,14 @@ import io.pivotal.cities.domain.city.entity.CityEntity
 import io.pivotal.cities.domain.city.repository.CityRepository
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
-import javax.transaction.Transactional
+import jakarta.transaction.Transactional
 
 @Service
 @Transactional
 internal class JpaCityService(val cityRepo: CityRepository) : CityService {
 
 	private val log = LoggerFactory.getLogger(JpaCityService::class.java)
-	 
+
     override fun retrieveCity(cityId: String): CityDto? {
         log.debug("Retrieving city: {}", cityId)
         val currentCity = cityRepo.findById(cityId).orElse(null)
@@ -42,10 +42,10 @@ internal class JpaCityService(val cityRepo: CityRepository) : CityService {
 
         return cityRepo.save(CityEntity.fromDto(city)).toDto()
     }
-	
+
 	override fun deleteCity(id: String) {
 		log.debug("Deleting city with id: {}", id)
-		
+
 		cityRepo.deleteById(id)
 	}
 }

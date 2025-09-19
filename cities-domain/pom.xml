@@ -9,7 +9,7 @@
     <artifactId>spring-boot-with-kotlin-and-jpa-example</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
-  
+
   <artifactId>cities-domain</artifactId>
   <packaging>jar</packaging>
 
@@ -17,7 +17,7 @@
     <dependency>
       <groupId>org.hsqldb</groupId>
       <artifactId>hsqldb</artifactId>
-      <version>2.7.1</version>
+      <version>2.7.4</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -25,13 +25,8 @@
       <artifactId>spring-boot-starter-data-jpa</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-validator</artifactId>
-      <version>6.2.0.Final</version>
-    </dependency>
-    <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-java8</artifactId>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-validation</artifactId>
     </dependency>
 
   </dependencies>

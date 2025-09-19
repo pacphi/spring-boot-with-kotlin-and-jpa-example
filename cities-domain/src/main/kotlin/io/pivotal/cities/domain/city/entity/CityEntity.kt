@@ -5,10 +5,10 @@ import io.pivotal.cities.domain.city.api.dto.CreateCityDto
 import io.pivotal.cities.domain.city.api.dto.UpdateCityDto
 import io.pivotal.cities.domain.location.jpa.Coordinate
 import java.time.LocalDateTime
-import javax.persistence.Embedded
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.Table
+import jakarta.persistence.Embedded
+import jakarta.persistence.Entity
+import jakarta.persistence.Id
+import jakarta.persistence.Table
 
 
 @Entity
@@ -44,7 +44,7 @@ internal data class CityEntity(
                 id = dto.id,
                 name = dto.name,
                 description = dto.description,
-                location = Coordinate(dto.location.longitude, dto.location.latitude))
+                location = Coordinate.fromDto(dto.location))
 
         fun fromDto(dto: UpdateCityDto, defaultCity: CityEntity) = CityEntity(
                 id = defaultCity.id!!,

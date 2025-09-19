@@ -1,7 +1,7 @@
 package io.pivotal.cities.domain
 
 import java.math.BigDecimal
-import javax.persistence.AttributeConverter
+import jakarta.persistence.AttributeConverter
 
 class DoubleAttributeConverter : AttributeConverter<Double, BigDecimal?> {
 

@@ -1,11 +1,10 @@
 buildscript {
     ext {
-        gitPropertiesPluginVersion = '1.5.1'
+        gitPropertiesPluginVersion = '2.5.3'
         cfAppVersion = '2.2.0'
-        dockerPluginVersion = '1.5.4'
-        kotlinVersion = '1.2.51'
-        springBootVersion = '2.0.4.RELEASE'
-        springDependencyManagementPluginVersion = '1.0.6.RELEASE'
+        kotlinVersion = '2.2.20'
+        springBootVersion = '3.5.6'
+        springDependencyManagementPluginVersion = '1.1.7'
     }
     repositories {
         mavenCentral()
@@ -20,13 +19,12 @@ buildscript {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         classpath("io.spring.gradle:dependency-management-plugin:${springDependencyManagementPluginVersion}")
         classpath("com.github.pivotalservices:ya-cf-app-gradle-plugin:${cfAppVersion}")
-        classpath("gradle.plugin.org.sgornostal:gradle-docker-plugin:${dockerPluginVersion}")
         classpath("gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:${gitPropertiesPluginVersion}")
     }
 }
 
 allprojects {
-    
+
     apply plugin: 'kotlin'
     apply plugin: 'kotlin-jpa'
     apply plugin: 'kotlin-spring'
@@ -34,16 +32,16 @@ allprojects {
     apply plugin: 'idea'
     apply plugin: 'com.gorylenko.gradle-git-properties'
 
-    compileKotlin {
+    implementationKotlin {
         kotlinOptions {
             freeCompilerArgs = ["-Xjsr305=strict"]
-            jvmTarget = "1.8"
+            jvmTarget = "21"
         }
     }
-    compileTestKotlin {
+    implementationTestKotlin {
         kotlinOptions {
             freeCompilerArgs = ["-Xjsr305=strict"]
-            jvmTarget = "1.8"
+            jvmTarget = "21"
         }
     }
 
@@ -53,8 +51,7 @@ allprojects {
     }
 
     dependencies {
-        compile('org.jetbrains.kotlin:kotlin-stdlib-jre8')
-        compile('org.jetbrains.kotlin:kotlin-reflect')
+        implementation('org.jetbrains.kotlin:kotlin-reflect')
     }
 }
 
@@ -63,10 +60,9 @@ subprojects {
     apply plugin: 'jacoco'
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
-    apply plugin: 'org.sgornostal.docker'
 
-    jacoco { toolVersion = "0.8.1" }
-    
+    jacoco { toolVersion = "0.8.13" }
+
     jacocoTestReport {
         reports {
             xml.enabled = true
@@ -85,9 +81,9 @@ subprojects {
             })
         }
     }
-    
+
     check.dependsOn jacocoTestReport
-        
+
     repositories {
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/releases" }
@@ -95,18 +91,25 @@ subprojects {
     }
 
     dependencies {
-        compile('org.springframework.boot:spring-boot-starter')
-        compile('com.fasterxml.jackson.dataformat:jackson-dataformat-yaml')
-        compile('org.flywaydb:flyway-core')
-        testCompile('org.springframework.boot:spring-boot-starter-test')
-        testCompile('org.assertj:assertj-core')
-        testCompile('org.mockito:mockito-core')
-        testCompile('com.nhaarman:mockito-kotlin:1.5.0')
+        implementation('org.springframework.boot:spring-boot-starter')
+        implementation('com.fasterxml.jackson.dataformat:jackson-dataformat-yaml')
+        implementation('org.flywaydb:flyway-core')
+        implementation('org.flywaydb:flyway-database-hsqldb')
+        testImplementation('org.springframework.boot:spring-boot-starter-test') {
+            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        }
+        testImplementation('org.assertj:assertj-core')
+        testImplementation('org.mockito:mockito-core')
+        testImplementation('org.mockito.kotlin:mockito-kotlin:6.0.0')
     }
 
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-    
+    test {
+        useJUnitPlatform()
+    }
+
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+
     bootJar.enabled = false
     jar.enabled = true
 }

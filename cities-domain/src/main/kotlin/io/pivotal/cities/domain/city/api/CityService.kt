@@ -13,6 +13,6 @@ interface CityService {
     fun addCity(city: CreateCityDto): CityDto
 
     fun updateCity(id: String, city: UpdateCityDto): CityDto?
-	
+
 	fun deleteCity(id: String)
 }

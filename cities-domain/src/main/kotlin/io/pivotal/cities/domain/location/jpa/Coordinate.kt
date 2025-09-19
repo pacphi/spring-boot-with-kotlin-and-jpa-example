@@ -2,8 +2,8 @@ package io.pivotal.cities.domain.location.jpa
 
 import io.pivotal.cities.domain.DoubleAttributeConverter
 import io.pivotal.cities.domain.location.api.CoordinateDto
-import javax.persistence.Convert
-import javax.persistence.Embeddable
+import jakarta.persistence.Convert
+import jakarta.persistence.Embeddable
 
 @Embeddable
 internal data class Coordinate(

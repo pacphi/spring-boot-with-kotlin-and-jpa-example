@@ -9,10 +9,9 @@ import io.pivotal.cities.domain.city.repository.CityRepository
 import io.pivotal.cities.domain.location.api.CoordinateDto
 import io.pivotal.cities.domain.location.jpa.Coordinate
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.JUnitSoftAssertions
-import org.junit.Rule
-import org.junit.Test
-import org.junit.runner.RunWith
+import org.assertj.core.api.SoftAssertions
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.Mockito.mock
 import org.slf4j.Logger
 import org.springframework.beans.factory.InjectionPoint
@@ -21,10 +20,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Scope
 import org.springframework.test.context.ContextConfiguration
-import org.springframework.test.context.junit4.SpringRunner
+import org.springframework.test.context.junit.jupiter.SpringExtension
 import java.time.LocalDateTime
 
-@RunWith(SpringRunner::class)
+@ExtendWith(SpringExtension::class)
 @ContextConfiguration(classes = arrayOf(
         JpaCityServiceTest.Config::class,
         CityConfig::class))
@@ -43,8 +42,6 @@ internal class JpaCityServiceTest {
     @Autowired
     lateinit var repository: CityRepository
 
-    @get:Rule
-    var softly = JUnitSoftAssertions()
 
     @Test
     fun `'retrieveCities' should retrieve empty list if repository doesn't contain entities`() {
@@ -61,10 +58,13 @@ internal class JpaCityServiceTest {
         repository.save(CityEntity("city", "cityname", "description", Coordinate(1.0, -1.0)))
 
         val result = service.retrieveCity("city")
-        softly.assertThat(result?.id).isNotNull
-        softly.assertThat(result?.name).isEqualTo("cityname")
-        softly.assertThat(result?.description).isEqualTo("description")
-        softly.assertThat(result?.location).isEqualTo(CoordinateDto(1.0, -1.0))
+        SoftAssertions().apply {
+            assertThat(result?.id).isNotNull
+            assertThat(result?.name).isEqualTo("cityname")
+            assertThat(result?.description).isEqualTo("description")
+            assertThat(result?.location).isEqualTo(CoordinateDto(1.0, -1.0))
+            assertAll()
+        }
     }
 
     @Test
@@ -72,22 +72,28 @@ internal class JpaCityServiceTest {
         repository.save(CityEntity("city", "cityname", "description", Coordinate(1.0, -1.0)))
         val result = service.retrieveCities()
 
-        softly.assertThat(result).hasSize(1)
-        result.forEach {
-            softly.assertThat(it.id).isNotNull
-            softly.assertThat(it.name).isEqualTo("cityname")
-            softly.assertThat(it.description).isEqualTo("description")
-            softly.assertThat(it.location).isEqualTo(CoordinateDto(1.0, -1.0))
+        SoftAssertions().apply {
+            assertThat(result).hasSize(1)
+            result.forEach {
+                assertThat(it.id).isNotNull
+                assertThat(it.name).isEqualTo("cityname")
+                assertThat(it.description).isEqualTo("description")
+                assertThat(it.location).isEqualTo(CoordinateDto(1.0, -1.0))
+            }
+            assertAll()
         }
     }
 
     @Test
     fun `'addCity' should return created entity`() {
         val (id, name, description, location) = service.addCity(CreateCityDto("id", "name", "description", CoordinateDto(1.0, 1.0)))
-        softly.assertThat(id).isEqualTo("id")
-        softly.assertThat(name).isEqualTo("name")
-        softly.assertThat(description).isEqualTo("description")
-        softly.assertThat(location).isEqualTo(CoordinateDto(1.0, 1.0))
+        SoftAssertions().apply {
+            assertThat(id).isEqualTo("id")
+            assertThat(name).isEqualTo("name")
+            assertThat(description).isEqualTo("description")
+            assertThat(location).isEqualTo(CoordinateDto(1.0, 1.0))
+            assertAll()
+        }
     }
 
     @Test
@@ -98,13 +104,16 @@ internal class JpaCityServiceTest {
 
         val result = service.updateCity(existingCity.id, UpdateCityDto("new name", "new description", CoordinateDto(-1.0, -1.0)))
 
-        softly.assertThat(result).isNotNull
-        softly.assertThat(result?.id).isEqualTo(existingCity.id)
-        softly.assertThat(result?.name).isEqualTo("new name")
-        softly.assertThat(result?.description).isEqualTo("new description")
-        softly.assertThat(result?.location).isEqualTo(CoordinateDto(-1.0, -1.0))
-        softly.assertThat(result?.updatedAt).isAfter(existingCity.updatedAt)
-        softly.assertThat(result?.createdAt).isEqualTo(existingCity.createdAt)
+        SoftAssertions().apply {
+            assertThat(result).isNotNull
+            assertThat(result?.id).isEqualTo(existingCity.id)
+            assertThat(result?.name).isEqualTo("new name")
+            assertThat(result?.description).isEqualTo("new description")
+            assertThat(result?.location).isEqualTo(CoordinateDto(-1.0, -1.0))
+            assertThat(result?.updatedAt).isAfter(existingCity.updatedAt)
+            assertThat(result?.createdAt).isEqualTo(existingCity.createdAt)
+            assertAll()
+        }
     }
 
     @Test
@@ -120,12 +129,15 @@ internal class JpaCityServiceTest {
 
         val result = service.updateCity(existingCity.id, UpdateCityDto(null, null, null))
 
-        softly.assertThat(result).isNotNull
-        softly.assertThat(result?.id).isEqualTo(existingCity.id)
-        softly.assertThat(result?.name).isEqualTo("cityname")
-        softly.assertThat(result?.description).isEqualTo("description")
-        softly.assertThat(result?.location).isEqualTo(CoordinateDto(1.0, -1.0))
-        softly.assertThat(result?.updatedAt).isAfter(existingCity.updatedAt)
-        softly.assertThat(result?.createdAt).isEqualTo(existingCity.createdAt)
+        SoftAssertions().apply {
+            assertThat(result).isNotNull
+            assertThat(result?.id).isEqualTo(existingCity.id)
+            assertThat(result?.name).isEqualTo("cityname")
+            assertThat(result?.description).isEqualTo("description")
+            assertThat(result?.location).isEqualTo(CoordinateDto(1.0, -1.0))
+            assertThat(result?.updatedAt).isAfter(existingCity.updatedAt)
+            assertThat(result?.createdAt).isEqualTo(existingCity.createdAt)
+            assertAll()
+        }
     }
 }

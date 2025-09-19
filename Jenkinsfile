@@ -1,6 +1,6 @@
 pipeline {
 	agent {
-		label 'master' 
+		label 'master'
 	}
 	tools {
 		jdk 'jdk-8u162'
@@ -62,5 +62,5 @@ pipeline {
 			}
 		}
 	}
-        
+
 }
