@@ -46,6 +46,32 @@ pom.xml                    # Parent POM
 </properties>
 ```
 
+### JaCoCo Test Coverage Configuration
+
+To enable the `./mvnw jacoco:report` command, add the JaCoCo plugin to your root pom.xml:
+
+```xml
+<plugin>
+    <groupId>org.jacoco</groupId>
+    <artifactId>jacoco-maven-plugin</artifactId>
+    <version>0.8.13</version>
+    <executions>
+        <execution>
+            <goals>
+                <goal>prepare-agent</goal>
+            </goals>
+        </execution>
+        <execution>
+            <id>report</id>
+            <phase>test</phase>
+            <goals>
+                <goal>report</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
+```
+
 ### Build Commands
 
 ```bash

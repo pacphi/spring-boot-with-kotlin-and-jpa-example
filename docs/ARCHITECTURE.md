@@ -35,7 +35,7 @@ The web module depends on the domain module, following **dependency inversion pr
 - **Spring Data JPA** - ORM and data access
 - **Hibernate** - JPA implementation
 - **Flyway 11.13.1** - Database migration
-- **PostgreSQL 42.7.7** - Primary database (runtime)
+- **PostgreSQL 42.7.8** - Primary database (runtime)
 - **HSQLDB 2.7.4** - In-memory database (testing)
 
 ### Web Layer
