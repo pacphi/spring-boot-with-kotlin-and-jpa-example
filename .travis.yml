@@ -18,7 +18,8 @@ deploy:
   api: $CF_API
   organization: $CF_ORGANIZATION
   space: $CF_SPACE
+  manifest: cities-web/manifest.yml
 
 branches:
   only:
-    - master
+    - main
