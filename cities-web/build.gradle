@@ -62,6 +62,6 @@ dependencies {
     compile('com.zaxxer:HikariCP')
     compile('io.micrometer:micrometer-registry-prometheus:1.15.4')
     runtime('org.hsqldb:hsqldb:2.7.4')
-    runtime('org.postgresql:postgresql:42.7.7')
+    runtime('org.postgresql:postgresql:42.7.8')
 }
 
