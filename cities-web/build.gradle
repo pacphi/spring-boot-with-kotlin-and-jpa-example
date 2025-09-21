@@ -2,7 +2,7 @@ apply plugin: 'cf-app'
 
 bootJar {
     enabled = true
-    classifier = 'exec'
+    archiveClassifier = 'exec'
 }
 
 jar.enabled = false
@@ -20,9 +20,9 @@ cfConfig {
     space = "mySpace"
 
     //App Details
-    name = "${bootJar.baseName}"
-    host = "${bootJar.baseName}"
-    filePath = "${buildDir}/libs/${bootJar.archiveName}"
+    name = "${bootJar.archiveBaseName.get()}"
+    host = "${bootJar.archiveBaseName.get()}"
+    filePath = "${layout.buildDirectory.get()}/libs/${bootJar.archiveFileName.get()}"
     path = ""
     domain = "cfapps.io"
     instances = 1
@@ -34,8 +34,8 @@ cfConfig {
 }
 
 tasks.named("bootBuildImage") {
-    imageName = "${dockerImagePrefix}/${bootJar.baseName}:${project.version}"
-    tags = ["${dockerImagePrefix}/${bootJar.baseName}:latest"]
+    imageName = "${dockerImagePrefix}/${bootJar.archiveBaseName.get()}:${project.version}"
+    tags = ["${dockerImagePrefix}/${bootJar.archiveBaseName.get()}:latest"]
     environment = [
         "BP_JVM_VERSION": "21"
     ]
@@ -52,16 +52,16 @@ tasks.named("bootBuildImage") {
 }
 
 dependencies {
-    compile project(':cities-domain')
-    compile('org.springframework.boot:spring-boot-starter-actuator')
-    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
-    compile('org.springframework.boot:spring-boot-starter-web')
-    compile('org.springframework.boot:spring-boot-starter-hateoas')
-    compile('org.springframework.data:spring-data-rest-hal-explorer')
-    compile('com.fasterxml.jackson.module:jackson-module-kotlin')
-    compile('com.zaxxer:HikariCP')
-    compile('io.micrometer:micrometer-registry-prometheus:1.15.4')
-    runtime('org.hsqldb:hsqldb:2.7.4')
-    runtime('org.postgresql:postgresql:42.7.7')
+    implementation project(':cities-domain')
+    implementation('org.springframework.boot:spring-boot-starter-actuator')
+    implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    implementation('org.springframework.boot:spring-boot-starter-hateoas')
+    implementation('org.springframework.data:spring-data-rest-hal-explorer')
+    implementation('com.fasterxml.jackson.module:jackson-module-kotlin')
+    implementation('com.zaxxer:HikariCP')
+    implementation('io.micrometer:micrometer-registry-prometheus:1.15.4')
+    runtimeOnly('org.hsqldb:hsqldb:2.7.4')
+    runtimeOnly('org.postgresql:postgresql:42.7.8')
 }
 
