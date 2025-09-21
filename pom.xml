@@ -9,7 +9,7 @@
 	<packaging>pom</packaging>
 
 	<name>Spring Boot Kotlin and JPA Example</name>
-	<description>Demo project for Spring Boot 2.0 which produces two artifacts: a domain library and a web-service packaged as an executable JAR.</description>
+	<description>Demo project for Spring Boot 3.5.6 which produces two artifacts: a domain library and a web-service packaged as an executable JAR.</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>

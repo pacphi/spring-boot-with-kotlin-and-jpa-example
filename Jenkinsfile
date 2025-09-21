@@ -3,7 +3,8 @@ pipeline {
 		label 'master'
 	}
 	tools {
-		jdk 'jdk-8u162'
+		jdk 'jdk-21.0.8'
+		gradle 'gradle-9.1.0'
 	}
 	parameters {
 		string(name: 'CF_API', defaultValue: 'api.run.pivotal.io', description: 'API endpoint used to target a Cloud Foundry foundation.')
@@ -36,7 +37,7 @@ pipeline {
 				script {
 					def server = Artifactory.server "artifactory"
 					def rtGradle = Artifactory.newGradleBuild()
-					rtGradle.tool = "gradle-4.6"
+					rtGradle.tool = "gradle-9.1.0"
 					rtGradle.deployer repo:'gradle-dev', server: server
 					rtGradle.resolver repo:'gradle-dev', server: server
 					def buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'artifactoryPublish'

@@ -7,13 +7,16 @@ data:
   spring_profiles_active: k8s,seeded
   java_opts: -XX:+UseG1GC -Xmx1G
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cities-web
   namespace: default
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: cities-web
   template:
     metadata:
       name: cities-web
@@ -57,3 +60,30 @@ spec:
         #image: {prefix}.azurecr.io/{subscription_id}/cities-web:latest
         image: us.gcr.io/fe-cphillipson/cities-web:latest
         imagePullPolicy: IfNotPresent
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          runAsUser: 1000
+          seccompProfile:
+            type: RuntimeDefault
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+        volumeMounts:
+        - name: tmp-volume
+          mountPath: /tmp
+        - name: cache-volume
+          mountPath: /home/app/.cache
+      volumes:
+      - name: tmp-volume
+        emptyDir: {}
+      - name: cache-volume
+        emptyDir: {}

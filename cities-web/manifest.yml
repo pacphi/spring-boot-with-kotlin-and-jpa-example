@@ -5,5 +5,7 @@ applications:
   random-route: true
   instances: 1
   buildpack: https://github.com/cloudfoundry/java-buildpack
+  env:
+    JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 21.+ } }'
   services:
     - my-pgdb

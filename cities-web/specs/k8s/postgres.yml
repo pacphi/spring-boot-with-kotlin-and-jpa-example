@@ -19,11 +19,14 @@ spec:
     requests:
       storage: 2Gi
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: postgres
 spec:
+  selector:
+    matchLabels:
+      app: postgres
   template:
     metadata:
       labels:
@@ -34,7 +37,7 @@ spec:
           persistentVolumeClaim:
             claimName: postgres-pv-claim
       containers:
-        - image: postgres:10.3
+        - image: postgres:15
           name: postgres
           env:
             - name: POSTGRES_USER
@@ -57,6 +60,13 @@ spec:
           ports:
             - containerPort: 5432
               name: postgres
+          resources:
+            requests:
+              memory: "1Gi"
+              cpu: "500m"
+            limits:
+              memory: "2Gi"
+              cpu: "1000m"
           volumeMounts:
             - name: postgres-storage
               mountPath: /var/lib/postgresql/data

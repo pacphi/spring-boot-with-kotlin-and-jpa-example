@@ -1,19 +1,42 @@
 spring:
+  application:
+    name: cities-web
+
+  profiles:
+    active: local
+
   jpa:
     hibernate:
       ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: false
+
   flyway:
     locations: classpath:db/migration
     baseline-on-migrate: true
     baseline-version: 1.0
+
   jackson:
+    serialization:
+      write-dates-as-timestamps: false
     serialization-inclusion: non-empty
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
 
 management:
   endpoints:
     web:
       exposure:
-        include: "*"
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: when_authorized
   metrics:
     distribution:
       percentiles-histogram:
@@ -27,11 +50,13 @@ management:
 
 logging:
   level:
+    org.springframework.web: INFO
+    org.hibernate: INFO
     org.flyway: DEBUG
-    org.hibernate: DEBUG
-    org.springframework: INFO
     com.zaxxer.hikari: DEBUG
     io.pivotal: DEBUG
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
 
 ---
 
@@ -40,16 +65,10 @@ spring:
     activate:
       on-profile: postgres
   datasource:
-    driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/geo_data
     username: postgres
     password: postgres
-  jpa:
-    properties:
-      hibernate:
-        temp:
-          use_jdbc_metadata_defaults: false
-    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+    driver-class-name: org.postgresql.Driver
 
 ---
 
@@ -78,12 +97,15 @@ spring:
   config:
     activate:
       on-profile: cloud
-  jpa:
-    properties:
-      hibernate:
-        temp:
-          use_jdbc_metadata_defaults: false
-    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: docker
+  datasource:
+    url: jdbc:postgresql://postgres:5432/geo_data
 
 ---
 
@@ -92,6 +114,6 @@ spring:
     activate:
       on-profile: k8s
   datasource:
-    url: jdbc:postgresql://${POSTGRES_HOST}:5432/${POSTGRES_DB}
-    username: ${POSTGRES_USER}
+    url: jdbc:postgresql://${POSTGRES_HOST:postgres-service}:5432/${POSTGRES_DB:geo_data}
+    username: ${POSTGRES_USER:postgres}
     password: ${POSTGRES_PASSWORD}
