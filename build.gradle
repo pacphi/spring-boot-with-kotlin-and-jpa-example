@@ -80,7 +80,7 @@ subprojects {
         }
         testImplementation('org.assertj:assertj-core')
         testImplementation('org.mockito:mockito-core')
-        testImplementation('org.mockito.kotlin:mockito-kotlin:6.0.0')
+        testImplementation('org.mockito.kotlin:mockito-kotlin:6.1.0')
     }
 
     test {
