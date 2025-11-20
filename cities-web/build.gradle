@@ -60,7 +60,7 @@ dependencies {
     implementation('org.springframework.data:spring-data-rest-hal-explorer')
     implementation('com.fasterxml.jackson.module:jackson-module-kotlin')
     implementation('com.zaxxer:HikariCP')
-    implementation('io.micrometer:micrometer-registry-prometheus:1.15.5')
+    implementation('io.micrometer:micrometer-registry-prometheus:1.16.0')
     runtimeOnly('org.hsqldb:hsqldb:2.7.4')
     runtimeOnly('org.postgresql:postgresql:42.7.8')
 }
